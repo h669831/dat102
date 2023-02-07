@@ -33,7 +33,7 @@ public class Lag implements Comparable<Lag>{
  @Override
 public int compareTo (Lag detAndre){
     int resultat = 0;
-    if (seire < detAndre.getSeire()){
+    if (this.seire < detAndre.getSeire()){
         resultat = -1;
     }
     else if (this.seire == detAndre.getSeire()){

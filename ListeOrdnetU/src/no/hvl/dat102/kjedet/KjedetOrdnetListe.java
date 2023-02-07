@@ -45,9 +45,9 @@ public class KjedetOrdnetListe<T extends Comparable<T>> implements OrdnetListeAD
 		if (erTom())
 			throw new EmptyCollectionException("ordnet liste");
 
-		T svar = foerste.getElement();
+		T resultat = foerste.getElement();
 
-		return svar;
+		return resultat;
 	}
 
 	@Override
