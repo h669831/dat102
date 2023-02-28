@@ -9,7 +9,7 @@ public class TabellOrdnetListe<T extends Comparable<T>> implements OrdnetListeAD
 	private final static int IKKE_FUNNET = -1;
 	private int bak;
 	private T[] liste;
-
+	
 	public TabellOrdnetListe() {
 		this(STDK);
 	}
