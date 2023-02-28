@@ -88,6 +88,7 @@ public class KjedetOrdnetListe<T extends Comparable<T>> implements OrdnetListeAD
 	public void leggTil(T element) {
 
 		// ...Fyll ut
+		//
 	}
 
 	@Override

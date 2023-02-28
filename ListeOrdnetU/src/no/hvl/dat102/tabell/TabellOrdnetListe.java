@@ -9,7 +9,7 @@ public class TabellOrdnetListe<T extends Comparable<T>> implements OrdnetListeAD
 	private final static int IKKE_FUNNET = -1;
 	private int bak;
 	private T[] liste;
-	
+
 	public TabellOrdnetListe() {
 		this(STDK);
 	}
@@ -26,6 +26,10 @@ public class TabellOrdnetListe<T extends Comparable<T>> implements OrdnetListeAD
 
 		T resultat = null;
 		// ... Fyll ut
+		resultat = liste[bak - 1];
+		liste[bak - 1] = null;
+		bak--;
+
 		return resultat;
 	}
 
@@ -36,6 +40,10 @@ public class TabellOrdnetListe<T extends Comparable<T>> implements OrdnetListeAD
 
 		T resultat = null;
 		// ... Fyll ut
+		resultat = liste[0];
+		for (int j = 0; j < bak - 1; j++) {  // kan være bak istedetfor bak-1
+			liste[j] = liste[j + 1];
+		}
 		return resultat;
 	}
 
@@ -52,11 +60,21 @@ public class TabellOrdnetListe<T extends Comparable<T>> implements OrdnetListeAD
 	public T siste() {
 		if (erTom())
 			throw new EmptyCollectionException("ordnet liste");
-		
-		T resultat = null;
-		// ...Fyll ut
 
-		return resultat;
+		// T resultat = null;
+		return liste[bak - 1];
+		// ...Fyll ut
+		T forrige = null;
+		for (int i = 0; i < liste.length; i++) {
+			for (T element : liste) {
+				if (element == null) {
+					return forrige;
+				}
+				forrige = element;
+			}
+		}
+
+		return forrige; // erstatt alle forrige med resultat
 	}
 
 	@Override
@@ -73,6 +91,21 @@ public class TabellOrdnetListe<T extends Comparable<T>> implements OrdnetListeAD
 	public void leggTil(T element) {
 
 		// ...Fyll ut
+		if (antall() == liste.length) {
+			utvid();
+		}
+		int indeks = 0;
+		for (int i = 0; i < liste.length; i++) {
+			indeks = i;
+			if (liste[i].compareTo(element) >= 0) {
+				break;
+			}
+		}
+		for (int j = bak - 1; j >= indeks; j--) {
+			liste[j + 1] = liste[j];
+		}
+		liste[indeks] = element;
+		bak++;
 	}
 
 	@Override
@@ -83,13 +116,40 @@ public class TabellOrdnetListe<T extends Comparable<T>> implements OrdnetListeAD
 	@Override
 	public T fjern(T element) {
 		// ...Fyll ut
-		return element;
+		if (erTom())
+			throw new EmptyCollectionException("ordnet liste ");
+
+		boolean funnet = false;
+		T svar = null;
+		int indeks = 0;
+
+		for (int i = 0; (i < bak && !funnet); i++) {
+			if (liste[i].equals(element)) {
+				indeks = i;
+				svar = liste[i];
+				bak--;
+				funnet = true;
+			}
+		}
+		if (funnet) {
+			for (int j = indeks; j < bak - 1; j++) { // kan være bak istedetfor bak-1
+				liste[j] = liste[j + 1];
+			}
+		}
+		return svar;
 
 	}
 
 	private int finn(T el) {
 		int i = 0, resultat = IKKE_FUNNET;
-		// ...Fyll ut
+		// ...Fyll ut		
+		for (int j = 0; j < liste.length; j++) {
+			if (liste[j].equals(el)) {
+				resultat = 1;
+				break;
+			}
+		}
+		
 		return resultat;
 	}
 
